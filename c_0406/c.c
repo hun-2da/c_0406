@@ -5,7 +5,7 @@
 #define EVAL 2
 
 typedef struct {
-	/**½ºÅÃ*/
+	/**ìŠ¤íƒ*/
 	int *stack_i;
 	int top;
 	int capacity;
@@ -19,8 +19,8 @@ int is_full(stack_struct* s) {
 	return (s->top == (s->capacity - 1));
 }
 
-/** ½ºÅÃ¿¡ Çª½Ã¸¦ ÇØÁÙ ÇÔ¼ö_ ¸¸¾à ½ºÅÃÀÌ Ç®ÀÌ¶ó¸é reallocÇØÁÖ¾î »çÀÌÁî¸¦ ´­·ÁÁÖ°í Ç®ÀÌ ¾Æ´Ï¶ó¸é ½ºÅÃÀÇ top+1¿¡ item°ªÀ» ÀúÀå
-¹®ÀÚ¿­À» ÀÔ·Â¹Ş¾ÒÀ» °æ¿ì¸¦ ´ëºñÇØ *ÇüÅÂ·Î ¹ŞÀ» °ÍÀ» ¸í½Ã*/
+/** ìŠ¤íƒì— í‘¸ì‹œë¥¼ í•´ì¤„ í•¨ìˆ˜_ ë§Œì•½ ìŠ¤íƒì´ í’€ì´ë¼ë©´ reallocí•´ì£¼ì–´ ì‚¬ì´ì¦ˆë¥¼ ëˆŒë ¤ì£¼ê³  í’€ì´ ì•„ë‹ˆë¼ë©´ ìŠ¤íƒì˜ top+1ì— itemê°’ì„ ì €ì¥
+ë¬¸ìì—´ì„ ì…ë ¥ë°›ì•˜ì„ ê²½ìš°ë¥¼ ëŒ€ë¹„í•´ *í˜•íƒœë¡œ ë°›ì„ ê²ƒì„ ëª…ì‹œ*/
 void push(stack_struct* s, int item) {
 	if (is_full(s)) {
 		s->capacity = s->capacity * 2;
@@ -30,13 +30,13 @@ void push(stack_struct* s, int item) {
 	else s->stack_i[++s->top]=item;
 }
 
-/**½ºÅÃ¿¡ ÀÖ´Â ¿ä¼Ò¸¦ ÇÏ³ª¾¿ »©¿À±â À§ÇÑ ÇÔ¼ö_ ¸¸¾à ½ºÅÃÀÌ ºñ¾îÀÖ´Ù¸é empty_ ¾Æ´Ï¸é ½ºÅÃ[top]°ªÀ» ¸®ÅÏÇØÁÖ°í top-1¿¬»ê */
+/**ìŠ¤íƒì— ìˆëŠ” ìš”ì†Œë¥¼ í•˜ë‚˜ì”© ë¹¼ì˜¤ê¸° ìœ„í•œ í•¨ìˆ˜_ ë§Œì•½ ìŠ¤íƒì´ ë¹„ì–´ìˆë‹¤ë©´ empty_ ì•„ë‹ˆë©´ ìŠ¤íƒ[top]ê°’ì„ ë¦¬í„´í•´ì£¼ê³  top-1ì—°ì‚° */
 char pop(stack_struct* s,int p) {
 	if (is_empty(s)&& p == EVAL) {
-		fprintf(stderr, "ÇÇ¿¬»êÀÚ°¡ ºÎÁ·ÇÕ´Ï´Ù. \n");
+		fprintf(stderr, "í”¼ì—°ì‚°ìê°€ ë¶€ì¡±í•©ë‹ˆë‹¤. \n");
 		exit(1);
 	}else if (is_empty(s) && p == ITP) {
-		fprintf(stderr, "(°¡ ¾ø½À´Ï´Ù.\n");
+		fprintf(stderr, "(ê°€ ì—†ìŠµë‹ˆë‹¤.\n");
 		exit(1);
 	}
 	else return s->stack_i[s->top--];
@@ -44,7 +44,7 @@ char pop(stack_struct* s,int p) {
 char peek(stack_struct* s) {
 	return s->stack_i[s->top];
 }
-/**¿ì¼±¼øÀ§¸¦ ¸Å±â±âÀ§ÇÑ ÇÔ¼ö*/
+/**ìš°ì„ ìˆœìœ„ë¥¼ ë§¤ê¸°ê¸°ìœ„í•œ í•¨ìˆ˜*/
 int prech(char c) {
 	switch (c) {
 	case '(': case ')': return 0;
@@ -54,20 +54,20 @@ int prech(char c) {
 	return -1;
 }
 
-/**ÀÔ·Â ¹ŞÀº ¹®ÀÚ¿­À» ÈÄÀ§½ÄÀ¸·Î º¯°æÇÏ´Â ÇÔ¼ö*/
+/**ì…ë ¥ ë°›ì€ ë¬¸ìì—´ì„ í›„ìœ„ì‹ìœ¼ë¡œ ë³€ê²½í•˜ëŠ” í•¨ìˆ˜*/
 void infix_to_postfix(stack_struct* s,char exp[], char output_string []) {
-	int number = 0;		// Çª½Ã¸¦ À§ÇÑ º¯¼ö_ 
-	int len = strlen(exp);		// expÀÇ ±æÀÌ
+	int number = 0;		// í‘¸ì‹œë¥¼ ìœ„í•œ ë³€ìˆ˜_ 
+	int len = strlen(exp);		// expì˜ ê¸¸ì´
 	int b_p = 0;
-	char ch,top_c;		// °ıÈ£°¡ ´İÈú¶§ ½ºÅÃ¿¡ µé¾îÀÖ´ø ¹®ÀÚµéÀ» ÇÏ³ª¾¿ popÇØ¼­ ´ëÀÔÇØµÑ º¯¼ö_ 
+	char ch,top_c;		// ê´„í˜¸ê°€ ë‹«íë•Œ ìŠ¤íƒì— ë“¤ì–´ìˆë˜ ë¬¸ìë“¤ì„ í•˜ë‚˜ì”© popí•´ì„œ ëŒ€ì…í•´ë‘˜ ë³€ìˆ˜_ 
 
-	//¹®ÀÚ¿­ÀÇ ±æÀÌ¸¸Å­ ¹İº¹ÇÏ´Â ¹İº¹¹®
+	//ë¬¸ìì—´ì˜ ê¸¸ì´ë§Œí¼ ë°˜ë³µí•˜ëŠ” ë°˜ë³µë¬¸
 	for (int i = 0; i < len; i++) {
-		ch = exp[i];	//i¿¡ ÇØ´çÇÏ´Â ¹®ÀÚ¸¦ chº¯¼ö¿¡ ÀúÀåÇÏ¿© »ç¿ë
+		ch = exp[i];	//iì— í•´ë‹¹í•˜ëŠ” ë¬¸ìë¥¼ chë³€ìˆ˜ì— ì €ì¥í•˜ì—¬ ì‚¬ìš©
 
 		switch (ch) {
 
-			//ch°¡ ¿¬»êÀÚÀÎ °æ¿ì
+			//chê°€ ì—°ì‚°ìì¸ ê²½ìš°
 		case '+': case '-': case '*': case '/':
 			while (!is_empty(s) && (prech(ch) <= prech(peek(s))))
 				output_string[number++] = pop(s, ITP);
@@ -76,7 +76,7 @@ void infix_to_postfix(stack_struct* s,char exp[], char output_string []) {
 			push(s, ch);
 			break;
 
-			//ch°¡ °ıÈ£ÀÎ °æ¿ì
+			//chê°€ ê´„í˜¸ì¸ ê²½ìš°
 		case '(': push(s, ch); b_p++; break;
 		case ')': 
 			b_p--;
@@ -87,10 +87,10 @@ void infix_to_postfix(stack_struct* s,char exp[], char output_string []) {
 				
 			}break;
 			
-			//ch°¡ ÇÇ¿¬»êÀÚÀÎ °æ¿ì
+			//chê°€ í”¼ì—°ì‚°ìì¸ ê²½ìš°
 		default:
 			if (!('0' <= ch && ch <= '9')) {
-				fprintf(stderr, "Àß¸øµÈ ÀÔ·Â°ªÀÌ Æ÷ÇÔµÇ¾î ÀÖ½À´Ï´Ù.\n");
+				fprintf(stderr, "ì˜ëª»ëœ ì…ë ¥ê°’ì´ í¬í•¨ë˜ì–´ ìˆìŠµë‹ˆë‹¤.\n");
 				exit(1);
 			}
 			output_string[number++] = ch;
@@ -98,10 +98,10 @@ void infix_to_postfix(stack_struct* s,char exp[], char output_string []) {
 		}
 	}
 	if (b_p != 0) {
-		fprintf(stderr, ")°¡ ¾ø½À´Ï´Ù. \n");
+		fprintf(stderr, ")ê°€ ì—†ìŠµë‹ˆë‹¤. \n");
 		exit(1);
 	}
-	//½ºÅÃ¿¡ ³²¾ÆÀÖ´Â ¸ğµç °ªµéÀ» Ãâ·Â
+	//ìŠ¤íƒì— ë‚¨ì•„ìˆëŠ” ëª¨ë“  ê°’ë“¤ì„ ì¶œë ¥
 	while (!is_empty(s)) {
 		output_string[number++] = pop(s,ITP);
 		output_string[number] = NULL;
@@ -109,27 +109,27 @@ void infix_to_postfix(stack_struct* s,char exp[], char output_string []) {
 	return;
 }
 
-/**ÈÄÀ§½Ä ¹®ÀÚ¿­À» °è»êÇÏ±âÀ§ÇÑ ÇÔ¼ö*/
+/**í›„ìœ„ì‹ ë¬¸ìì—´ì„ ê³„ì‚°í•˜ê¸°ìœ„í•œ í•¨ìˆ˜*/
 int eval(stack_struct* s, char exp[]) {
 	int op1, op2, value;
 	int len = strlen(exp);
 	
-	//rÀº reallocÇØÁÙ º¯¼ö, nÀº i´ë½Å »ç¿ëÇÒ º¯¼ö,
+	//rì€ reallocí•´ì¤„ ë³€ìˆ˜, nì€ iëŒ€ì‹  ì‚¬ìš©í•  ë³€ìˆ˜,
 	//int r = 0,n;
 	for (int i = 0; i < len; i++) {
 		int op = 0;
 		char ch = exp[i];
 		
-		if ('0' <= ch && ch <= '9') { //ch°¡ ¼ıÀÚÀÏ °æ¿ì
+		if ('0' <= ch && ch <= '9') { //chê°€ ìˆ«ìì¼ ê²½ìš°
 
-			// ´ÙÀ½¼öµµ ¼ıÀÚ¶ó¸é ¿©·¯ÀÚ¸´¼ö ¼ıÀÚ·Î Ãë±Ş
+			// ë‹¤ìŒìˆ˜ë„ ìˆ«ìë¼ë©´ ì—¬ëŸ¬ìë¦¿ìˆ˜ ìˆ«ìë¡œ ì·¨ê¸‰
 			if ('0' <= exp[i+1] && exp[i+1] <= '9') {
 
-				// µÎÀÚ¸®¼ö ÀÌ»óÀÇ ¼ıÀÚ¸¦ ÀúÀåÇÒ ¹®ÀÚ¿­ º¯¼ö
+				// ë‘ìë¦¬ìˆ˜ ì´ìƒì˜ ìˆ«ìë¥¼ ì €ì¥í•  ë¬¸ìì—´ ë³€ìˆ˜
 				char* s_array = malloc(sizeof(char));
 				for (int a = 0, n = i;; a++, n++) {
 					if (/*'0' <= exp[n] && exp[n] <= '9'*/exp[n]!=' ') {
-						s_array = realloc(s_array, (a+2) * sizeof(char));
+						s_array = realloc(s_array, (a+1) * sizeof(char));
 						//exp[i] = s_array;
 						s_array[a] = exp[n];
 						
@@ -153,7 +153,7 @@ int eval(stack_struct* s, char exp[]) {
 		
 			
 		}
-		else if(ch!=' ')/*¼ıÀÚ°¡ ¾Æ´Ò°æ¿ì*/ {
+		else if(ch!=' ')/*ìˆ«ìê°€ ì•„ë‹ê²½ìš°*/ {
 			op2 = pop(s,EVAL);
 			op1 = pop(s,EVAL);
 
@@ -171,54 +171,54 @@ int eval(stack_struct* s, char exp[]) {
 	}
 	if (s->top != 0) {
 		for (; s->top > 0;)
-			fprintf(stderr, "¿¬»êÀÚ°¡ ºÎÁ·ÇÏ¿© ÇÇ¿¬»êÀÚ %d °ªÀÌ ³²½À´Ï´Ù.\n", pop(s,EVAL));
+			fprintf(stderr, "ì—°ì‚°ìê°€ ë¶€ì¡±í•˜ì—¬ í”¼ì—°ì‚°ì %d ê°’ì´ ë‚¨ìŠµë‹ˆë‹¤.\n", pop(s,EVAL));
 	}
 	return pop(s,EVAL);
 }
 void main() {
-	printf("ÁßÀ§½Ä Ç¥ÇöÀº : ");
+	printf("ì¤‘ìœ„ì‹ í‘œí˜„ì€ : ");
 
 	int n = 100;
 
-	//ÀÔ·ÂÀ» ¹Ş±âÀ§ÇÑ charÇü µ¿Àû ¹è¿­·Î ±¸ÇöÇÏ±â À§ÇØ Æ÷ÀÎÅÍ º¯¼ö »ı¼º
+	//ì…ë ¥ì„ ë°›ê¸°ìœ„í•œ charí˜• ë™ì  ë°°ì—´ë¡œ êµ¬í˜„í•˜ê¸° ìœ„í•´ í¬ì¸í„° ë³€ìˆ˜ ìƒì„±
 	char* input_array = malloc(n * sizeof(char));
 	if (input_array == NULL) {
-		fprintf(stderr, "ÀÔ·Â ¹®ÀÚ ÀúÀå°ø°£ÀÌ NULL");
+		fprintf(stderr, "ì…ë ¥ ë¬¸ì ì €ì¥ê³µê°„ì´ NULL");
 		return;
 	}
 	scanf_s("%s", input_array, n);
 
-	// ÈÄÀ§½ÄÀ¸·Î Ãâ·Â½ÃÄÑÁÙ º¯¼ö
+	// í›„ìœ„ì‹ìœ¼ë¡œ ì¶œë ¥ì‹œì¼œì¤„ ë³€ìˆ˜
 	char* output_array = malloc(n * sizeof(char));
 	if (input_array == NULL) {
-		fprintf(stderr, "ÀÔ·Â ¹®ÀÚ ÀúÀå°ø°£ÀÌ NULL");
+		fprintf(stderr, "ì…ë ¥ ë¬¸ì ì €ì¥ê³µê°„ì´ NULL");
 		return;
 	}
 
-	//element ±¸Á¶Ã¼¸¦ µ¿ÀûÇÒ´ç¹Ş¾Æ »ç¿ëÇÏ±â À§ÇÑ Æ÷ÀÎÅÍ º¯¼ö ¼±¾ğ
+	//element êµ¬ì¡°ì²´ë¥¼ ë™ì í• ë‹¹ë°›ì•„ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í¬ì¸í„° ë³€ìˆ˜ ì„ ì–¸
 	stack_struct* s_s = malloc(sizeof(stack_struct));
 	if (s_s == NULL) {
-		fprintf(stderr, "±¸Á¶Ã¼°¡ NULL");
+		fprintf(stderr, "êµ¬ì¡°ì²´ê°€ NULL");
 		return;
 	}
 	s_s->top = -1;
 	s_s->capacity = 10;
 
-	//¿¬»êÀ» ÇÒ¶§ »ç¿ëÇÒ stack_c µ¿ÀûÇÒ´çÀ¸·Î »çÀÌÁî Á¶ÀıÀÌ °¡´ÉÇÏ°Ô²û ¸¸µé¾úÀ½
+	//ì—°ì‚°ì„ í• ë•Œ ì‚¬ìš©í•  stack_c ë™ì í• ë‹¹ìœ¼ë¡œ ì‚¬ì´ì¦ˆ ì¡°ì ˆì´ ê°€ëŠ¥í•˜ê²Œë” ë§Œë“¤ì—ˆìŒ
 	s_s->stack_i = malloc(s_s->capacity * sizeof(char));
 	if (s_s->stack_i == NULL) {
-		fprintf(stderr, "c½ºÅÃÀÌ NULL");
+		fprintf(stderr, "cìŠ¤íƒì´ NULL");
 		return;
 	}
 
-	//ÁßÀ§ Ç¥Çö½ÄÀ¸·Î ÀÔ·Â¹ŞÀº ¹®ÀÚ¿­À» ÈÄÀ§½ÄÀ¸·Î º¯ÇüÇÏ±âÀ§ÇÑ ÇÔ¼ö ½ºÅÃ
+	//ì¤‘ìœ„ í‘œí˜„ì‹ìœ¼ë¡œ ì…ë ¥ë°›ì€ ë¬¸ìì—´ì„ í›„ìœ„ì‹ìœ¼ë¡œ ë³€í˜•í•˜ê¸°ìœ„í•œ í•¨ìˆ˜ ìŠ¤íƒ
 	infix_to_postfix(s_s, input_array, output_array);
-	printf("ÈÄÀ§½Ä Ç¥ÇöÀº %s \n", output_array);
+	printf("í›„ìœ„ì‹ í‘œí˜„ì€ %s \n", output_array);
 
-	//ÈÄÀ§Ç¥Çö½ÄÀ» ¿¬»êÇÏ±âÀ§ÇÑ ÇÔ¼ö
-	printf("°á°ú °ªÀº %d \n", eval(s_s, output_array));
+	//í›„ìœ„í‘œí˜„ì‹ì„ ì—°ì‚°í•˜ê¸°ìœ„í•œ í•¨ìˆ˜
+	printf("ê²°ê³¼ ê°’ì€ %d \n", eval(s_s, output_array));
 
-	//ÇÒ´çÇÑ ¸Ş¸ğ¸®µéÀ» ¹İÈ¯
+	//í• ë‹¹í•œ ë©”ëª¨ë¦¬ë“¤ì„ ë°˜í™˜
 	free(s_s->stack_i);
 	free(s_s);
 	free(input_array);
